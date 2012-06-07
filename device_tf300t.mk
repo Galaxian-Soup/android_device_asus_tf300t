@@ -38,10 +38,23 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.cardhu.cpu.rc:root/init.cardhu.cpu.rc \
     $(LOCAL_PATH)/prebuilt/keyswap::root/sbin/keyswap \
 
+# Kernel modules
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/lib/baseband_usb_chr.ko:system/lib/modules/baseband_usb_chr.ko \
+    $(LOCAL_PATH)/prebuilt/lib/baseband-xmm-power2.ko:system/lib/modules/baseband-xmm-power2.ko \
+    $(LOCAL_PATH)/prebuilt/lib/bcmdhd.ko:system/lib/modules/bcmdhd.ko \
+    $(LOCAL_PATH)/prebuilt/lib/raw_ip_net.ko:system/lib/modules/raw_ip_net.ko \
+    $(LOCAL_PATH)/prebuilt/lib/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
+    $(LOCAL_PATH)/prebuilt/lib/tcrypt.ko:system/lib/modules/tcrypt.ko
+
 # Prebuilt configeration files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/asound.conf:system/etc/asound.conf \
-    $(LOCAL_PATH)/prebuilt/cpu.sh:system/bin/cpu.sh \
+    $(LOCAL_PATH)/prebuilt/cpu1.sh:system/bin/cpu1.sh \
+    $(LOCAL_PATH)/prebuilt/cpu2.sh:system/bin/cpu2.sh \
+    $(LOCAL_PATH)/prebuilt/cpu3.sh:system/bin/cpu3.sh \
+    $(LOCAL_PATH)/prebuilt/cpu4.sh:system/bin/cpu4.sh \
+    $(LOCAL_PATH)/prebuilt/cpu5.sh:system/bin/cpu5.sh \
     $(LOCAL_PATH)/prebuilt/media_profiles.xml:system/etc/media_profiles.xml \
     $(LOCAL_PATH)/prebuilt/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/prebuilt/gpsconfig.xml:system/etc/gps/gpsconfig.xml
@@ -102,9 +115,7 @@ PRODUCT_PACKAGES += \
     libaudioutils \
     libinvensense_mpl \
     blobpack_tfp \
-    AutoParts_tfp \
     mischelp \
-    com.cyanogenmod.asusdec \
     libasusdec_jni
 
 # Propertys spacific for this device
@@ -127,7 +138,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
 
 # Call the vendor to setup propiatory files
-$(call inherit-product-if-exists, vendor/asus/tf201/tf201-vendor.mk)
+$(call inherit-product-if-exists, vendor/asus/tf300t/tf300t-vendor.mk)
 
 # Copy bcm4329 firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)

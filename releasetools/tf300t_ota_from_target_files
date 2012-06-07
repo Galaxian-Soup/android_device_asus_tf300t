@@ -62,6 +62,9 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
 
   --override_device <device>
       Override device-specific asserts. Can be a comma-separated list.
+   
+  --no_assert <true|false>
+	  Including this will turn device asserts off.
 
 """
 
@@ -102,11 +105,10 @@ OPTIONS.worker_threads = 3
 OPTIONS.backuptool = False
 OPTIONS.modelidcfg = True
 OPTIONS.override_device = 'auto'
+OPTIONS.no_assert = False
 
 LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 DEV_OUT_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../out/target/product/tf300t/'))
-
-
 
 def MostPopularKey(d, default):
   """Given a dict, return the key corresponding to the largest
@@ -403,9 +405,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
   #  ts = GetBuildProp("ro.build.date.utc", input_zip)
   #  script.AssertOlderBuild(ts)
 
-  AppendAssertions(script, input_zip)
-  script.UnmountAll()
-  device_specific.FullOTA_Assertions()
+  if not OPTIONS.no_assert:
+    AppendAssertions(script, input_zip)
+    device_specific.FullOTA_Assertions()
   if OPTIONS.backuptool:
     script.RunBackup("backup")
 
@@ -436,6 +438,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
 
   Item.GetMetadata(input_zip)
   Item.Get("system").SetPermissions(script)
+  script.SetPermissions("/system/etc/init.d/cpu_overclock", 0, 0, 0755)
 
   common.ZipWriteStr(output_zip, "boot.blob", blob.data)
   script.ShowProgress(0.2, 0)
@@ -444,8 +447,8 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.ShowProgress(0.2, 10)
     script.RunBackup("restore")
 
-  if OPTIONS.modelidcfg:
-    script.RunConfig("")
+#  if OPTIONS.modelidcfg:
+#    script.RunConfig("")
 
   script.ShowProgress(0.2, 10)
   script.WriteRawImage("/staging", "boot.blob")
@@ -588,8 +591,9 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
   #  0.8 for applying patches (ApplyPatch calls)
   #  0.1 for unpacking verbatim files, symlinking, and doing the
   #      device-specific commands.
-
-  AppendAssertions(script, target_zip)
+  
+  if OPTIONS.no_assert:
+     AppendAssertions(script, target_zip)
   device_specific.IncrementalOTA_Assertions()
 
   script.Print("Verifying current system...")
@@ -781,6 +785,11 @@ def main(argv):
       OPTIONS.omit_prereq = True
     elif o in ("-e", "--extra_script"):
       OPTIONS.extra_script = a
+    elif o in ("--no_assert"):
+      if a in ("on", "On", "true", "True", "yes", "Yes"):
+        OPTIONS.no_assert = True
+      else:
+        OPTIONS.no_assert = False
     elif o in ("-a", "--aslr_mode"):
       if a in ("on", "On", "true", "True", "yes", "Yes"):
         OPTIONS.aslr_mode = True
@@ -802,6 +811,7 @@ def main(argv):
                              extra_opts="b:k:i:d:wne:a:",
                              extra_long_opts=["board_config=",
                                               "package_key=",
+                                              "no_assert=",
                                               "incremental_from=",
                                               "wipe_user_data",
                                               "no_prereq",
