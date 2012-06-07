@@ -153,8 +153,6 @@
 
     <bool name="config_enableCrtAnimations">false</bool>
 
-    <!--
     <string name="config_deviceKeyHandlerLib">/system/framework/com.cyanogenmod.asusdec.jar</string>
     <string name="config_deviceKeyHandlerClass">com.cyanogenmod.asusdec.KeyHandler</string>
-    -->
 </resources>

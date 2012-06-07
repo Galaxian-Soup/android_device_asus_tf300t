@@ -116,6 +116,7 @@ PRODUCT_PACKAGES += \
     libinvensense_mpl \
     blobpack_tfp \
     mischelp \
+    com.cyanogenmod.asusdec \
     libasusdec_jni
 
 # Propertys spacific for this device
