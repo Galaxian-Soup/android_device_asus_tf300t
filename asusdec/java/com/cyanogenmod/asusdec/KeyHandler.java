@@ -74,12 +74,15 @@ public final class KeyHandler implements DeviceKeyHandler {
         mAutomaticAvailable = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_automatic_brightness_available);
 
+        Slog.e(TAG, "KeyHandler: KeyHandler initialized");
+
         try {
             mDeviceSettingsContext = context.createPackageContext(
                     "com.cyanogenmod.settings.device", 0);
             SharedPreferences prefs = mDeviceSettingsContext.getSharedPreferences(
                     PREFS_FILE, Context.MODE_WORLD_READABLE);
             mTouchpadEnabled = prefs.getBoolean(PREFS_TOUCHPAD_STATUS, true);
+            Slog.e(TAG, "KeyHandler: Got KeyHandler config settings");
         } catch (NameNotFoundException e) {
             Slog.e(TAG, "Could not find device com.cyanogenmod.settings.device", e);
         }
@@ -87,10 +90,14 @@ public final class KeyHandler implements DeviceKeyHandler {
 
     @Override
     public int handleKeyEvent(KeyEvent event) {
+        Slog.e(TAG, "KeyHandler: handleKeyEvent called");
+
         if (event.getAction() != KeyEvent.ACTION_DOWN
                 || event.getRepeatCount() != 0) {
             return KEYEVENT_UNCAUGHT;
         }
+
+        Slog.e(TAG, "KeyHandler: Attempting to figure out keycode " + event.getKeyCode());
 
         switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_TOGGLE_WIFI:
@@ -122,6 +129,7 @@ public final class KeyHandler implements DeviceKeyHandler {
                 return KEYEVENT_UNCAUGHT;
         }
 
+        Slog.e(TAG, "KeyHandler: Handled key event");
         return KEYEVENT_CAUGHT;
     }
 

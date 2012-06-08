@@ -115,6 +115,7 @@ PRODUCT_PACKAGES += \
     libaudioutils \
     libinvensense_mpl \
     blobpack_tfp \
+    AutoParts_tfp \
     mischelp \
     com.cyanogenmod.asusdec \
     libasusdec_jni

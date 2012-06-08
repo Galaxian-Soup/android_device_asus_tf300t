@@ -127,9 +127,11 @@ public class DeviceSettings extends PreferenceActivity implements
         editor.putString(PREFS_LANG, language);
         editor.commit();
 
+        /* not sure why they are setting the pref there and here
         String layout = L10N_PREFIX + language;
         Settings.System.putString(context.getContentResolver(),
                 Settings.System.KEYLAYOUT_OVERRIDES, layout);
+        */
     }
 
     private static String getLayoutPreference(Context context) {
