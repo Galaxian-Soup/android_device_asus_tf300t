@@ -24,4 +24,6 @@
     <!-- Whether we're using the tablet-optimized recents interface (we use this
      value at runtime for some things) -->
     <bool name="config_recents_interface_for_tablets">true</bool>
+
+    <bool name="config_hideSignalBars">true</bool>
 </resources>

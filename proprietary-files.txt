@@ -53,7 +53,11 @@ lib/libami.so
 lib/libami_sensor_mw.so
 lib/libardrv_dynamic.so
 lib/libasound.so
+lib/libavcodec.so
+lib/libavutil.so
 lib/libcgdrv.so
+lib/libiris-jni.so
+lib/libjingle.so
 lib/libmllite.so
 lib/libmlplatform.so
 lib/libmplmpu.so
@@ -110,7 +114,11 @@ lib/libnvtestresults.so
 lib/libnvtvmr.so
 lib/libnvwinsys.so
 lib/libnvwsi.so
+lib/libortp.so
+lib/libpolarisoffice_Clipboard.so
+lib/libpolarisoffice.so
 lib/libstagefrighthw.so
+lib/libswscale.so
 lib/omxplayer.so
 lib/libsensors.al3010.so  
 lib/libsensors.isl29018.so
